@@ -1,5 +1,6 @@
-from flask import Flask,render_template, url_for,request
-import random
+from flask import Flask,render_template, url_for,request, jsonify
+import pickle, numpy, pandas, random, scipy, 
+
 
 
 app=Flask(__name__)
