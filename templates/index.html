@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>Hotel cancellations Predication</title>
+  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  
+  body {
+    background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
+	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+	background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+	background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
+
+  }
+ 
+  input, select { 
+	width: 15%; 
+	margin-bottom: 10px; 
+	background: rgba(255, 255, 255, 0.3);  
+	border: none;
+	outline: none;
+	padding: 10px;
+	font-size: 13px;
+	color: #232222b9;
+	text-shadow: 1px 1px 1px rgb(5, 5, 5);
+	border: 1px solid rgba(0,0,0,0.3);
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: inset 0 -5px 45px #bab8b8, 0 1px 1px #080808;
+  
+}
+
+label{
+ color: #fefefe;
+}
+
+#btn{  
+text-align: center;  
+}
+
+input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
+
+.login h1 { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; }
+
+#box {
+    border: solid white 1px;
+    border-radius: 12px ;
+    align-content : center;
+}
+
+.button {
+  align-items: center;
+  background-color: #04AA6D; /* Green */
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+</style>
+  
+</head>
+
+<body>
+ <div class="login">
+	<h1> <u> Hotel Booking Predication </u></h1>
+  
+      <div id="box">
+     <!-- Main Input For Receiving Query to our ML -->
+    
+      <br>
+   
+      <form action = "http://localhost:5000/success"  method = "POST" target="_blank">
+
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="Hotel Type"> Hotel Type : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <select name="Hotel Type" id="Hotel Type" required = "required">
+      <option value="  "> Select Hotel Type </option>
+      <option value="0.27763354967548676">Resort Hotel</option>
+      <option value="0.41726963317786464">City Hotel</option>
+    </select>
+
+     
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+    <label for="Adults" name="Adults">Adults : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name="Total Booking" id="Total Booking">
+      <option value="">-- Select option --</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+        <option value="31">31</option>
+        <option value="32">32</option>
+        <option value="33">33</option>
+        <option value="34">34</option>
+        <option value="35">35</option>
+        <option value="36">36</option>
+        <option value="37">37</option>
+        <option value="38">38</option>
+        <option value="39">39</option>
+        <option value="40">40</option>
+        <option value="41">41</option>
+        <option value="42">42</option>
+        <option value="43">43</option>
+        <option value="44">44</option>
+        <option value="45">45</option>
+        <option value="46">46</option>
+        <option value="47">47</option>
+        <option value="48">48</option>
+        <option value="49">49</option>
+        <option value="50">50</option>
+        <option value="51">51</option>
+        <option value="52">52</option>
+        <option value="53">53</option>
+        <option value="54">54</option>
+        <option value="55">55</option>
+        <option value="56">56</option>
+        <option value="57">57</option>
+        <option value="58">58</option>
+        <option value="59">59</option>
+        <option value="60">60</option>
+        <option value="61">61</option>
+        <option value="62">62</option>
+        <option value="63">63</option>
+        <option value="64">64</option>
+        <option value="65">65</option>
+        <option value="66">66</option>
+        <option value="67">67</option>
+        <option value="68">68</option>
+        <option value="69">69</option>
+        <option value="70">70</option>
+        <option value="71">71</option>
+        <option value="72">72</option>
+        <option value="73">73</option>
+        <option value="74">74</option>
+        <option value="75">75</option>
+        <option value="76">76</option>
+        <option value="77">77</option>
+        <option value="78">78</option>
+        <option value="79">79</option>
+        <option value="80">80</option>
+        <option value="81">81</option>
+        <option value="82">82</option>
+        <option value="83">83</option>
+        <option value="84">84</option>
+        <option value="85">85</option>
+        <option value="86">86</option>
+        <option value="87">87</option>
+        <option value="88">88</option>
+        <option value="89">89</option>
+        <option value="90">90</option>
+        <option value="91">91</option>
+        <option value="92">92</option>
+        <option value="93">93</option>
+        <option value="94">94</option>
+        <option value="95">95</option>
+        <option value="96">96</option>
+        <option value="97">97</option>
+        <option value="98">98</option>
+        <option value="99">99</option>
+        <option value="100">100</option>
+      </select>
+   
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="Customer Type">Customer Type : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name="Customer Type" id="Customer Type">
+      <option value=""> -- Select Customer Type --</option>
+    <option value="0.4074632028835102">Transient</option>
+    <option value="0.3096172718351325">Contract</option>
+    <option value="0.2542986785543703">Transient-Party</option>
+    <option value="0.1022530329289428">Group</option>
+    </select>
+    
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <label for="Desposite Type">Desposite Type : </label>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <select name="Desposite Type" id="Desposite Type">
+        <option value=""> -- Select Desposite Type --</option>
+        <option value="0.28377022390841067">No Deposit</option>
+        <option value="0.9936244601357374">Non Refund</option>
+        <option value="0.2222222222222222">Refundable</option>
+      </select>
+
+<br>  
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+    <label for="Reservered Room Type">Reservered Room Type : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name="Reservered Room Type" id="Reservered Room Type">
+      <option value=""> -- Select Reservered Room Type -- </option>
+      <option value="0.3910737958462218">A</option>
+      <option value="0.3291592128801431">B</option>
+      <option value="0.33047210300429186">C</option>
+      <option value="0.3177959481277017">D</option>
+      <option value=" 0.29288446824789593">E</option>
+      <option value="0.30376251294442524">F</option>
+      <option value="0.3643744030563515">G</option>
+      <option value="0.40765391014975044">H</option>
+      <option value="0.3333333333333333">L</option>
+      <option value="1.0">P</option>
+    </select>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <label for="Distribution Channel">Distribution Channel : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name="Distribution Channel" id="Distribution Channel">
+      <option value=""> -- Select Distribution Channel --</option>
+      <option value="0.17459884">Direct</option>
+      <option value="0.22075783">Corporate</option>
+      <option value="0.41025851">TA/TO</option>
+      <option value="0.8 ">Undefined</option>
+      <option value="0.19170984">GDS</option>
+    </select>
+
+<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+<label for="Market Segment">Market Segment : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name="Market Segment" id="Market Segment">
+  <option value=""> -- Select Market Segment --</option>
+  <option value="0.21940928270042195">Aviation</option>
+  <option value="0.13055181695827725">Complementary</option>
+  <option value="0.1873465533522191">Corporate</option>
+  <option value="0.15341900682214818">Direct</option>
+  <option value="0.6106203624249155">Groups</option>
+  <option value="0.34316032866757507">Offline TA/TO</option>
+  <option value="0.3672114312020823">Online TA</option>
+  <option value="1.0">Undefined</option>
+</select>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<label for="Meal">Meal : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name="Meals" id="Meals">
+  <option value="">-- Select your Meals --</option>
+  <option value="0.3738489871086556">Bed & Breakfast</option>
+  <option value="0.5989974937343359">Full board</option>
+  <option value="0.3446034709258107">Half board</option>
+  <option value="0.3723943661971831"> no meal package</option>
+  <option value="0.2446535500427716">Undefined</option>
+</select>
+
+<br>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+<label for="Total Bookings"> Total Bookings : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name="Total Booking" id="Total Booking">
+  <option value="">-- Select option --</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17</option>
+    <option value="18">18</option>
+    <option value="19">19</option>
+    <option value="20">20</option>
+    <option value="21">21</option>
+    <option value="22">22</option>
+    <option value="23">23</option>
+    <option value="24">24</option>
+    <option value="25">25</option>
+    <option value="26">26</option>
+    <option value="27">27</option>
+    <option value="28">28</option>
+    <option value="29">29</option>
+    <option value="30">30</option>
+    <option value="31">31</option>
+    <option value="32">32</option>
+    <option value="33">33</option>
+    <option value="34">34</option>
+    <option value="35">35</option>
+    <option value="36">36</option>
+    <option value="37">37</option>
+    <option value="38">38</option>
+    <option value="39">39</option>
+    <option value="40">40</option>
+    <option value="41">41</option>
+    <option value="42">42</option>
+    <option value="43">43</option>
+    <option value="44">44</option>
+    <option value="45">45</option>
+    <option value="46">46</option>
+    <option value="47">47</option>
+    <option value="48">48</option>
+    <option value="49">49</option>
+    <option value="50">50</option>
+    <option value="51">51</option>
+    <option value="52">52</option>
+    <option value="53">53</option>
+    <option value="54">54</option>
+    <option value="55">55</option>
+    <option value="56">56</option>
+    <option value="57">57</option>
+    <option value="58">58</option>
+    <option value="59">59</option>
+    <option value="60">60</option>
+    <option value="61">61</option>
+    <option value="62">62</option>
+    <option value="63">63</option>
+    <option value="64">64</option>
+    <option value="65">65</option>
+    <option value="66">66</option>
+    <option value="67">67</option>
+    <option value="68">68</option>
+    <option value="69">69</option>
+    <option value="70">70</option>
+    <option value="71">71</option>
+    <option value="72">72</option>
+    <option value="73">73</option>
+    <option value="74">74</option>
+    <option value="75">75</option>
+    <option value="76">76</option>
+    <option value="77">77</option>
+    <option value="78">78</option>
+    <option value="79">79</option>
+    <option value="80">80</option>
+    <option value="81">81</option>
+    <option value="82">82</option>
+    <option value="83">83</option>
+    <option value="84">84</option>
+    <option value="85">85</option>
+    <option value="86">86</option>
+    <option value="87">87</option>
+    <option value="88">88</option>
+    <option value="89">89</option>
+    <option value="90">90</option>
+    <option value="91">91</option>
+    <option value="92">92</option>
+    <option value="93">93</option>
+    <option value="94">94</option>
+    <option value="95">95</option>
+    <option value="96">96</option>
+    <option value="97">97</option>
+    <option value="98">98</option>
+    <option value="99">99</option>
+    <option value="100">100</option>
+  </select>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+  <label for="Repeated Guest">Repeated Guest : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <Select name ="Repeated Guest" id ="Repeated Guest">
+    <option value="">-- Select option --</option>
+    <option value="0">NO</option>
+    <option value="1">Yes</option>
+  </Select>
+
+<br>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<label for="No of Kids">No of Kids : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name="Total Booking" id="Total Booking">
+  <option value="">-- Select option --</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17</option>
+    <option value="18">18</option>
+    <option value="19">19</option>
+    <option value="20">20</option>
+    <option value="21">21</option>
+    <option value="22">22</option>
+    <option value="23">23</option>
+    <option value="24">24</option>
+    <option value="25">25</option>
+    <option value="26">26</option>
+    <option value="27">27</option>
+    <option value="28">28</option>
+    <option value="29">29</option>
+    <option value="30">30</option>
+    <option value="31">31</option>
+    <option value="32">32</option>
+    <option value="33">33</option>
+    <option value="34">34</option>
+    <option value="35">35</option>
+    <option value="36">36</option>
+    <option value="37">37</option>
+    <option value="38">38</option>
+    <option value="39">39</option>
+    <option value="40">40</option>
+    <option value="41">41</option>
+    <option value="42">42</option>
+    <option value="43">43</option>
+    <option value="44">44</option>
+    <option value="45">45</option>
+    <option value="46">46</option>
+    <option value="47">47</option>
+    <option value="48">48</option>
+    <option value="49">49</option>
+    <option value="50">50</option>
+    <option value="51">51</option>
+    <option value="52">52</option>
+    <option value="53">53</option>
+    <option value="54">54</option>
+    <option value="55">55</option>
+    <option value="56">56</option>
+    <option value="57">57</option>
+    <option value="58">58</option>
+    <option value="59">59</option>
+    <option value="60">60</option>
+    <option value="61">61</option>
+    <option value="62">62</option>
+    <option value="63">63</option>
+    <option value="64">64</option>
+    <option value="65">65</option>
+    <option value="66">66</option>
+    <option value="67">67</option>
+    <option value="68">68</option>
+    <option value="69">69</option>
+    <option value="70">70</option>
+    <option value="71">71</option>
+    <option value="72">72</option>
+    <option value="73">73</option>
+    <option value="74">74</option>
+    <option value="75">75</option>
+    <option value="76">76</option>
+    <option value="77">77</option>
+    <option value="78">78</option>
+    <option value="79">79</option>
+    <option value="80">80</option>
+    <option value="81">81</option>
+    <option value="82">82</option>
+    <option value="83">83</option>
+    <option value="84">84</option>
+    <option value="85">85</option>
+    <option value="86">86</option>
+    <option value="87">87</option>
+    <option value="88">88</option>
+    <option value="89">89</option>
+    <option value="90">90</option>
+    <option value="91">91</option>
+    <option value="92">92</option>
+    <option value="93">93</option>
+    <option value="94">94</option>
+    <option value="95">95</option>
+    <option value="96">96</option>
+    <option value="97">97</option>
+    <option value="98">98</option>
+    <option value="99">99</option>
+    <option value="100">100</option>
+  </select>
+
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<label for="Change in Room">Change in Room : </label>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <Select id ="Change in Room" name="Change in Room">
+  <option value="">-- Select option --</option>
+  <option value="0">NO</option>
+  <option value="1">Yes</option>
+</Select>
+
+
+<br>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+<label for="No of Special Request">No of Special Request : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <Select id ="No of Special Request" name="No of Special Request">
+  <option value="">-- Select option --</option>
+  <option value="0">0</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+</Select>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<label for="Car Parking Requesting">Car Parking Requesting : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <Select id ="Car Parking Requesting" name="Car Parking Requesting">
+  <option value="">-- Select option --</option>
+  <option value="0">0</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+</Select>
+
+<br>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+<label for="ADR">ADR : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <Select id ="ADR" name="ADR">
+  <option value="">-- Select option --</option>
+  <option value="4.77912349">1</option>
+  <option value="4.80073697">2</option>
+  <option value="4.25943518">3</option>
+  <option value="5.34677414">4</option>
+  <option value="5.09270671">5</option>
+  <option value="4.39444915">6</option>
+</Select>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<label for="Company">Company : </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="Company" id="Company">
+  <option value="0">NULL</option>
+  <option value="281">1</option>
+  <option value="348">2</option>
+  <option value="242">3</option>
+  <option value="405">4</option>
+  <option value="342">5</option>
+  <option value="144">6</option>
+  <option value="337">7</option>
+  <option value="59">8</option>
+  <option value="523">9</option>
+  <option value="390">10</option>
+  <option value="391">11</option>
+  <option value="392">12</option>
+  <option value="393">13</option>
+  <option value="404">14</option>
+  <option value="37">15</option>
+  <option value="8">16</option>
+  <option value="74">17</option>
+  <option value="14">18</option>
+  <option value="365">19</option>
+  <option value="24">20</option>
+  <option value="511">21</option>
+  <option value="290">22</option>
+  <option value="137">23</option>
+  <option value="496">24</option>
+  <option value="433">25</option>
+
+
+</select>
+
+
+<br>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+<label for="Agent">Agent : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name="Agent" id="Agent">
+  <option value="0">NULL</option>
+  <option value="281">1</option>
+  <option value="348">2</option>
+  <option value="242">3</option>
+  <option value="405">4</option>
+  <option value="342">5</option>
+  <option value="144">6</option>
+  <option value="337">7</option>
+  <option value="59">8</option>
+  <option value="523">9</option>
+  <option value="390">10</option>
+  <option value="391">11</option>
+  <option value="392">12</option>
+  <option value="393">13</option>
+  <option value="404">14</option>
+  <option value="37">15</option>
+  <option value="8">16</option>
+  <option value="74">17</option>
+  <option value="14">18</option>
+  <option value="365">19</option>
+  <option value="24">20</option>
+  <option value="511">21</option>
+  <option value="290">22</option>
+  <option value="137">23</option>
+  <option value="496">24</option>
+  <option value="433">25</option>
+</select>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+  <label for="booking_changes"> Booking_changes : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <select name="booking_changes" id="booking_changes">
+    <option value="0">NULL</option>
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17 </option>
+  </select>
+
+
+  <br>
+
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+<label for="previous_cancellations">Previous_cancellations : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <select name="previous_cancellations" id="previous_cancellations">
+    <option value="0">NULL</option>
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17 </option>
+    <option value="18">18</option>
+    <option value="19">19</option>
+    <option value="20">20</option>
+    <option value="21">21</option>
+    <option value="22">22</option>
+    <option value="23">23</option>
+    <option value="24">24</option>
+    <option value="25">25</option>
+    <option value="26">26</option>
+    <option value="27">27</option>
+    <option value="28">28</option>
+    <option value="29">29</option>
+    <option value="30">30</option>
+</select>
+
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<label for="Total stays nigths">Total stays nigths : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name="Total stays nigths" id="Total stays nigths">
+    <option value="">NULL</option>
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17 </option>
+    <option value="18">18</option>
+    <option value="19">19</option>
+    <option value="20">20</option>
+    <option value="21">21</option>
+    <option value="22">22</option>
+    <option value="23">23</option>
+    <option value="24">24</option>
+    <option value="25">25</option>
+    <option value="26">26</option>
+    <option value="27">27</option>
+    <option value="28">28</option>
+    <option value="29">29</option>
+    <option value="30">30</option>
+</select>
+
+
+
+   <br><br><br>
+   <div id="btn">
+    <input type="submit" value = "submit" id="button"/>
+        
+      </div>
+ 
+    </form>
+
+</div>
+
+
+   <br>
+   <br>
+   
+
+ </div>
+
+
+
+
+</body>
+</html>
